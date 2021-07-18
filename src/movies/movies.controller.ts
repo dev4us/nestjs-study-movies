@@ -1,32 +1,29 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
-import { create } from 'eslint/lib/rules/*';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Movie } from './entities/movie.entity';
+import { MoviesService } from './movies.service';
 
 @Controller('movies')
 export class MoviesController {
-  @Get()
-  getAll(){
-    return "this will return All movies"
-  }
+  constructor(private readonly moviesService: MoviesService){}
 
-  @Get("search")
-  search(@Query("year") searchingYear: string ){
-    return `We are searching for a movie made after: ${searchingYear}`;
+  @Get()
+  getAll(): Movie[]{
+    return this.moviesService.getAll();
   }
 
   @Get("/:id")
-  getOne(@Param('id') movieID: string){
-    return `This will return one Movie with the id: ${movieID}`;
+  getOne(@Param('id') movieID: string): Movie{
+    return this.moviesService.getOne(movieID);
   }
 
   @Post()
   create(@Body() movieData){
-    console.log(movieData);
-    return movieData;
+    return this.moviesService.create(movieData);
   }
 
   @Delete("/:id")
   remove(@Param('id') movieID: string){
-    return `This will delete a movie with the id: ${movieID}`
+    return this.moviesService.deleteOne(movieID);
   }
 
   @Patch('/:id')
