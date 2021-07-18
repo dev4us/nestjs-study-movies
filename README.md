@@ -23,51 +23,30 @@
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
+### Contollers
+- url을 받아 특정 함수를 실행시키는 역할 (기존 express의 라우터와 같은)
+- 데코레이터를 통해 주소를 매칭되는 url에 상응하는 기능을 제공(데코레이터를 통해 method를 설정 가능)
+  ```js
+    @Get() // '/'
+    functionName(): string {
+      return whatever;
+    }
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+    @Get('/profile') // '/profile'
+    functionName2(): string{
+      return whatever2;
+    }
+  ```
+- Nest.js는 컨트롤러를 비지니스 로직과 분리하는 것을 선호함
+- controller.ts 내 @Controller('movies')의 'movies'는 최우선적인 entry 라우팅 역할을 수행한다.
+  - /index => nope
+  - /movies/index => yes : )
 
-## Installation
+- 아래와 같은 방식으로 컨트롤러를 작성해주면 id를 파라미터로 수신한다.
 
-```bash
-$ npm install
-```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+  ```js
+  @Get("/:id")
+  getOne(@Param('id') movieID: string){
+    return `This will return one Movie with the id: ${movieID}`;
+  }
+  ```
