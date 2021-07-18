@@ -50,3 +50,20 @@
     return `This will return one Movie with the id: ${movieID}`;
   }
   ```
+
+- 쿼리 스트링을 사용하려면 아래와 같이 작성하면 된다.
+  ```js
+  @Get("search")
+  search(@Query("year") searchingYear: string ){
+    return `We are searching for a movie made after: ${searchingYear}`;
+  }
+  ```
+
+- Body 데이터를 활용하려면 아래와 같이 작성하면 된다.
+  ```js
+  @Post()
+  create(@Body() movieData){
+    console.log(movieData);
+    return movieData;
+  }
+  ```
