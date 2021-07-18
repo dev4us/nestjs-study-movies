@@ -67,3 +67,16 @@
     return movieData;
   }
   ```
+
+- Data 통신은 DTO로 규약을 정할 수 있다.
+
+- main.ts에 아래와 같이 추가하여 보안 레벨을 높일 수 있고 개발 편의성을 증대할 수 있다.
+  ```js
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true, // validation을 위한 decorator가 붙어있지 않은 속성들은 제거
+      forbidNonWhitelisted: true, // whitelist 설정을 켜서 걸러질 속성이 있다면 아예 요청 자체를 막도록 (400 에러)
+      transform: true, // 요청에서 넘어온 자료들의 형변환
+    })
+  );
+  ```
